@@ -20,6 +20,10 @@ public class ClientConfig implements InitializingBean {
     private InetAddress address;
     private String path;
 
+    public ClientConfig() {
+
+    }
+
     public int getPort() {
         return port;
     }

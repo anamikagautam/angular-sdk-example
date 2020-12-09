@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class AngularSdkExampleApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(AngularSdkExampleApplication.class, args);
     }
-
 }
