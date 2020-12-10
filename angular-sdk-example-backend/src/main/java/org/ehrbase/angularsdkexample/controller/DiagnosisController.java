@@ -36,12 +36,12 @@ public class DiagnosisController {
         return ResponseEntity.ok(Collections.singletonMap("ehr_id", ehrId));
     }
 
-    @PostMapping(path = "/{ehr_id}/diagnosis")
-    public void postDiagnosis(
-            @PathVariable(value = "ehr_id") UUID ehrId,
-            @RequestBody DiagnoseComposition body) {
-                try {
-            FileWriter myWriter = new FileWriter("ehrid_versionid.txt");
+    @PostMapping(path = "/diagnosis")
+    public  ResponseEntity<VersionUid> postDiagnosis(
+            @RequestBody DiagnoseComposition body) {    
+                UUID new_ehrid=service.createEhr();
+                /*try {
+            FileWriter myWriter = new FileWriter("ehrid_versionid_1.txt");
             for(int i=0;i<1000;i++){
             UUID new_ehrid=service.createEhr();
         VersionUid versionUid = service.saveDiagnosis(new_ehrid, body);
@@ -53,9 +53,10 @@ public class DiagnosisController {
     } catch (IOException e) {
       System.out.println("An error occurred.");
       e.printStackTrace();
-    }
-        
-        //return ResponseEntity.ok(versionUid);
+    }*/
+    VersionUid versionUid = service.saveDiagnosis(new_ehrid, body);
+    System.out.println(new_ehrid+"    "+versionUid+"   "+"\n");
+    return ResponseEntity.ok(versionUid);
     }
 
     @GetMapping(path = "/{ehr_id}/diagnosis/{id}")
