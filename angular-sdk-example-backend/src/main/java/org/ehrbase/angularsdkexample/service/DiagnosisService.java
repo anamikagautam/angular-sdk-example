@@ -5,7 +5,8 @@ import org.ehrbase.client.openehrclient.defaultrestclient.DefaultRestClient;
 import org.ehrbase.angularsdkexample.opt.diagnosecomposition.DiagnoseComposition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.io.FileWriter;
+import java.io.IOException; 
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,6 +21,19 @@ public class DiagnosisService {
     }
 
     public UUID createEhr() {
+        /*try {
+            FileWriter myWriter = new FileWriter("filename.txt");
+            for (int i=0;i<100000;i++){
+            String ehrid = (client.ehrEndpoint().createEhr()).toString();
+            myWriter.write(ehrid+"\n");
+        }
+        myWriter.close();
+      System.out.println("Successfully wrote to the file.");
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }*/
+        
         return client.ehrEndpoint().createEhr();
     }
 

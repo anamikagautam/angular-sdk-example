@@ -12,6 +12,9 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.io.FileWriter;
+import java.io.IOException; 
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -34,11 +37,25 @@ public class DiagnosisController {
     }
 
     @PostMapping(path = "/{ehr_id}/diagnosis")
-    public ResponseEntity<VersionUid> postDiagnosis(
+    public void postDiagnosis(
             @PathVariable(value = "ehr_id") UUID ehrId,
             @RequestBody DiagnoseComposition body) {
-        VersionUid versionUid = service.saveDiagnosis(ehrId, body);
-        return ResponseEntity.ok(versionUid);
+                try {
+            FileWriter myWriter = new FileWriter("ehrid_versionid.txt");
+            for(int i=0;i<1000;i++){
+            UUID new_ehrid=service.createEhr();
+        VersionUid versionUid = service.saveDiagnosis(new_ehrid, body);
+        System.out.println(new_ehrid+"    "+versionUid+"   "+i+"\n");
+            myWriter.write(new_ehrid+"    "+versionUid+"\n");
+        }
+        myWriter.close();
+      System.out.println("Successfully wrote to the file.");
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
+        
+        //return ResponseEntity.ok(versionUid);
     }
 
     @GetMapping(path = "/{ehr_id}/diagnosis/{id}")
