@@ -9,3 +9,4 @@ public class AngularSdkExampleApplication {
         SpringApplication.run(AngularSdkExampleApplication.class, args);
     }
 }
+
