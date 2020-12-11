@@ -26,13 +26,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class DiagnosisController {
     private final DiagnosisService service;
     private final ExampleService example;
-    private final N100Composition patientComposition;
+
+    // private final N100Composition patientComposition;
 
     @Autowired
-    public DiagnosisController(DiagnosisService service, ExampleService example, N100Composition patientComposition) {
+    public DiagnosisController(DiagnosisService service, ExampleService example) {
         this.service = service;
         this.example = example;
-        this.patientComposition = patientComposition;
+        // this.patientComposition = patientComposition;
     }
 
     @PostMapping(path = "/ehr")
@@ -42,16 +43,14 @@ public class DiagnosisController {
     }
 
     @PostMapping(path = "/{ehr_id}/diagnosis")
-    public ResponseEntity<VersionUid> postDiagnosis(
-            @PathVariable(value = "ehr_id") UUID ehrId,
+    public ResponseEntity<VersionUid> postDiagnosis(@PathVariable(value = "ehr_id") UUID ehrId,
             @RequestBody DiagnoseComposition body) {
         VersionUid versionUid = service.saveDiagnosis(ehrId, body);
         return ResponseEntity.ok(versionUid);
     }
 
     @GetMapping(path = "/{ehr_id}/diagnosis/{id}")
-    public ResponseEntity<DiagnoseComposition> getAssessment(
-            @PathVariable(value = "ehr_id") UUID ehrId,
+    public ResponseEntity<DiagnoseComposition> getAssessment(@PathVariable(value = "ehr_id") UUID ehrId,
             @PathVariable(value = "id") VersionUid id) {
         Optional<DiagnoseComposition> composition = service.getAssessment(ehrId, id);
 
@@ -64,10 +63,9 @@ public class DiagnosisController {
     public ResponseEntity<DiagnoseComposition> getExample() {
         return ResponseEntity.of(example.createExample());
     }
-/*
+
     @PostMapping(path = "/{ehr_id}/patients")
-    public ResponseEntity<VersionUid> postPatients(
-            @PathVariable(value = "ehr_id") UUID ehrId) {
+    public ResponseEntity<VersionUid> postPatients(@PathVariable(value = "ehr_id") UUID ehrId) {
         N100Composition patient = new N100Composition();
         patient.setPatientWeightUnits("patientWeightUnits");
         patient.setPatientNameValue("patientNameValue");
@@ -75,13 +73,12 @@ public class DiagnosisController {
         return ResponseEntity.ok(versionUid);
     }
 
-      @GetMapping(path = "/{ehr_id}/patients/{id}")
-    public ResponseEntity<N100Composition> getPatient(
-            @PathVariable(value = "ehr_id") UUID ehrId,
+    @GetMapping(path = "/{ehr_id}/patients/{id}")
+    public ResponseEntity<N100Composition> getPatient(@PathVariable(value = "ehr_id") UUID ehrId,
             @PathVariable(value = "id") VersionUid id) {
-        Optional<N100Composition> patient= service.getPatient(ehrId, id);
+        Optional<N100Composition> patient = service.getPatient(ehrId, id);
 
         return patient.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-    */
+
 }
