@@ -68,16 +68,18 @@ public class DiagnosisController {
 
     @GetMapping(path = "/example/patients")
     public ResponseEntity<PatientDetailComposition> getPatient() {
-        return ResponseEntity.of(patientPopulate.createPatient());
+        return ResponseEntity.of(Optional.of(patientPopulate.createPatient()));
     }
 
-    @PostMapping(path = "/{ehr_id}/patients")
-    public ResponseEntity<VersionUid> postPatients(@PathVariable(value = "ehr_id") UUID ehrId, @RequestBody PatientDetailComposition patient ) {
+    @GetMapping(path = "/patients")
+    public ResponseEntity<VersionUid> postPatients() {
         /*
         PatientsComposition patient = new PatientsComposition();
         patient.setHeightUnits("120cm");
         */
-        VersionUid versionUid = service.savePatients(ehrId, patient);
+
+        UUID ehrId = service.createEhr();
+        VersionUid versionUid = service.savePatients(ehrId, patientPopulate.createPatient());
         return ResponseEntity.ok(versionUid);
     }
 

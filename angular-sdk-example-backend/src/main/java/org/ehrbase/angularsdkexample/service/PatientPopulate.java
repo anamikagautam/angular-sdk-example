@@ -16,7 +16,7 @@ public class PatientPopulate {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public Optional<PatientDetailComposition> createPatient() {
+    public PatientDetailComposition createPatient() {
 
         logger.info("Creating 'Patient' example");
 
@@ -40,10 +40,11 @@ public class PatientPopulate {
         patient.setFeederAudit(null);
         patient.setParticipationsEventContext(null);
         patient.setLocationLocation(null);
+        patient.setCategoryDefiningcode(null);
 
-        CategoryDefiningcode categoryDefiningcode = new CategoryDefiningcode("value","description","terminologyId","code");
-        patient.setCategoryDefiningcode(categoryDefiningcode);
+       // CategoryDefiningcode categoryDefiningcode = new CategoryDefiningcode("value","description","terminologyId","code");
+        //patient.setCategoryDefiningcode(categoryDefiningcode);
 
-        return Optional.of(patient);
+        return patient;
     }
 }
