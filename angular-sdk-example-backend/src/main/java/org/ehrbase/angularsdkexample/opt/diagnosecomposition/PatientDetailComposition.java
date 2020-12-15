@@ -1,18 +1,18 @@
 package org.ehrbase.angularsdkexample.opt.diagnosecomposition;
 
-import java.time.temporal.TemporalAccessor;
-import java.util.List;
-
-import com.nedap.archie.rm.archetyped.Archetyped;
+import org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientdefinition.PatientRecordObservation;
+import org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientshareddefinition.CategoryDefiningcode;
+import org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientshareddefinition.Language;
+import org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientshareddefinition.SettingDefiningcode;
+import org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientshareddefinition.Territory;
 import com.nedap.archie.rm.archetyped.FeederAudit;
 import com.nedap.archie.rm.generic.Participation;
 import com.nedap.archie.rm.generic.PartyIdentified;
 import com.nedap.archie.rm.generic.PartyProxy;
-
-import org.ehrbase.angularsdkexample.opt.shareddefinition.CategoryDefiningcode;
-import org.ehrbase.angularsdkexample.opt.shareddefinition.Language;
-import org.ehrbase.angularsdkexample.opt.shareddefinition.SettingDefiningcode;
-import org.ehrbase.angularsdkexample.opt.shareddefinition.Territory;
+import java.lang.Double;
+import java.lang.String;
+import java.time.temporal.TemporalAccessor;
+import java.util.List;
 import org.ehrbase.client.annotations.Archetype;
 import org.ehrbase.client.annotations.Entity;
 import org.ehrbase.client.annotations.Id;
@@ -22,8 +22,8 @@ import org.ehrbase.client.openehrclient.VersionUid;
 
 @Entity
 @Archetype("openEHR-EHR-COMPOSITION.patient_document.v1")
-@Template("100")
-public class N100Composition {
+@Template("patient_detail")
+public class PatientDetailComposition {
   @Id
   private VersionUid versionUid;
 
@@ -48,29 +48,14 @@ public class N100Composition {
   @Path("/context[at0002]/start_time|value")
   private TemporalAccessor startTimeValue;
 
-  @Path("/context[at0002]/other_context[at0003]/items[at0012]/value|magnitude")
-  private Double patientAgeMagnitude;
-
-  @Path("/context[at0002]/other_context[at0003]/items[at0012]/value|units")
-  private String patientAgeUnits;
-
-  @Path("/context[at0002]/other_context[at0003]/items[at0013]/value|magnitude")
-  private Double patientWeightMagnitude;
-
-  @Path("/context[at0002]/other_context[at0003]/items[at0013]/value|units")
-  private String patientWeightUnits;
-
-  @Path("/context[at0002]/other_context[at0003]/items[at0014]/value|magnitude")
-  private Double patientHeightMagnitude;
-
-  @Path("/context[at0002]/other_context[at0003]/items[at0014]/value|units")
-  private String patientHeightUnits;
-
   @Path("/territory")
   private Territory territory;
 
-  @Path("/context[at0002]/other_context[at0003]/items[at0006]/value|value")
-  private String patientNameValue;
+  @Path("/context[at0002]/other_context[at0003]/items[at0006]/value|magnitude")
+  private Double heightMagnitude;
+
+  @Path("/context[at0002]/other_context[at0003]/items[at0006]/value|units")
+  private String heightUnits;
 
   @Path("/context[at0002]/end_time|value")
   private TemporalAccessor endTimeValueEventContext;
@@ -81,11 +66,8 @@ public class N100Composition {
   @Path("/context[at0002]/setting|defining_code")
   private SettingDefiningcode settingDefiningcode;
 
-  @Path("/archetype_details[at0005]")
-  private List<Archetyped> patientDetails;
-
-  @Path("/context[at0002]/other_context[at0003]/items[at0016]/value|value")
-  private String patientAddressValue;
+  @Path("/content[openEHR-EHR-OBSERVATION.patient_record.v1]")
+  private PatientRecordObservation patientRecord;
 
   @Path("/composer")
   private PartyProxy composer;
@@ -104,10 +86,6 @@ public class N100Composition {
 
   @Path("/category|defining_code")
   private CategoryDefiningcode categoryDefiningcode;
-
-  public N100Composition(){
-      
-  }
 
   public VersionUid getVersionUid() {
      return this.versionUid ;
@@ -149,8 +127,8 @@ public class N100Composition {
      return this.location ;
   }
 
-  public void setLanguage(Language language) {
-     this.language = language;
+  public void setLanguage(Language de) {
+     this.language = de;
   }
 
   public Language getLanguage() {
@@ -173,68 +151,28 @@ public class N100Composition {
      return this.startTimeValue ;
   }
 
-  public void setPatientAgeMagnitude(Double patientAgeMagnitude) {
-     this.patientAgeMagnitude = patientAgeMagnitude;
-  }
-
-  public Double getPatientAgeMagnitude() {
-     return this.patientAgeMagnitude ;
-  }
-
-  public void setPatientAgeUnits(String patientAgeUnits) {
-     this.patientAgeUnits = patientAgeUnits;
-  }
-
-  public String getPatientAgeUnits() {
-     return this.patientAgeUnits ;
-  }
-
-  public void setPatientWeightMagnitude(Double patientWeightMagnitude) {
-     this.patientWeightMagnitude = patientWeightMagnitude;
-  }
-
-  public Double getPatientWeightMagnitude() {
-     return this.patientWeightMagnitude ;
-  }
-
-  public void setPatientWeightUnits(String patientWeightUnits) {
-     this.patientWeightUnits = patientWeightUnits;
-  }
-
-  public String getPatientWeightUnits() {
-     return this.patientWeightUnits ;
-  }
-
-  public void setPatientHeightMagnitude(Double patientHeightMagnitude) {
-     this.patientHeightMagnitude = patientHeightMagnitude;
-  }
-
-  public Double getPatientHeightMagnitude() {
-     return this.patientHeightMagnitude ;
-  }
-
-  public void setPatientHeightUnits(String patientHeightUnits) {
-     this.patientHeightUnits = patientHeightUnits;
-  }
-
-  public String getPatientHeightUnits() {
-     return this.patientHeightUnits ;
-  }
-
-  public void setTerritory(Territory territory) {
-     this.territory = territory;
+  public void setTerritory(Territory de) {
+     this.territory = de;
   }
 
   public Territory getTerritory() {
      return this.territory ;
   }
 
-  public void setPatientNameValue(String patientNameValue) {
-     this.patientNameValue = patientNameValue;
+  public void setHeightMagnitude(Double heightMagnitude) {
+     this.heightMagnitude = heightMagnitude;
   }
 
-  public String getPatientNameValue() {
-     return this.patientNameValue ;
+  public Double getHeightMagnitude() {
+     return this.heightMagnitude ;
+  }
+
+  public void setHeightUnits(String heightUnits) {
+     this.heightUnits = heightUnits;
+  }
+
+  public String getHeightUnits() {
+     return this.heightUnits ;
   }
 
   public void setEndTimeValueEventContext(TemporalAccessor endTimeValueEventContext) {
@@ -253,28 +191,20 @@ public class N100Composition {
      return this.startTimeValueStartTime ;
   }
 
-  public void setSettingDefiningcode(SettingDefiningcode settingDefiningcode) {
-     this.settingDefiningcode = settingDefiningcode;
+  public void setSettingDefiningcode(SettingDefiningcode emergencyCare) {
+     this.settingDefiningcode = emergencyCare;
   }
 
   public SettingDefiningcode getSettingDefiningcode() {
      return this.settingDefiningcode ;
   }
 
-  public void setPatientDetails(List<Archetyped> patientDetails) {
-     this.patientDetails = patientDetails;
+  public void setPatientRecord(PatientRecordObservation patientRecord) {
+     this.patientRecord = patientRecord;
   }
 
-  public List<Archetyped> getPatientDetails() {
-     return this.patientDetails ;
-  }
-
-  public void setPatientAddressValue(String patientAddressValue) {
-     this.patientAddressValue = patientAddressValue;
-  }
-
-  public String getPatientAddressValue() {
-     return this.patientAddressValue ;
+  public PatientRecordObservation getPatientRecord() {
+     return this.patientRecord ;
   }
 
   public void setComposer(PartyProxy composer) {
@@ -317,11 +247,14 @@ public class N100Composition {
      return this.locationLocation ;
   }
 
-  public void setCategoryDefiningcode(CategoryDefiningcode categoryDefiningcode) {
-     this.categoryDefiningcode = categoryDefiningcode;
+  public void setCategoryDefiningcode(CategoryDefiningcode event) {
+     this.categoryDefiningcode = event;
   }
 
   public CategoryDefiningcode getCategoryDefiningcode() {
      return this.categoryDefiningcode ;
   }
+
+public void setBerichtIdValue(String string) {
+}
 }

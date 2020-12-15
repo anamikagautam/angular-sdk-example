@@ -1,14 +1,17 @@
 package org.ehrbase.angularsdkexample.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.ehrbase.angularsdkexample.opt.diagnosecomposition.DiagnoseComposition;
-import org.ehrbase.angularsdkexample.opt.diagnosecomposition.N100Composition;
+import org.ehrbase.angularsdkexample.opt.diagnosecomposition.PatientDetailComposition;
 import org.ehrbase.angularsdkexample.service.DiagnosisService;
 import org.ehrbase.angularsdkexample.service.ExampleService;
+import org.ehrbase.angularsdkexample.service.PatientPopulate;
 import org.ehrbase.client.openehrclient.VersionUid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class DiagnosisController {
     private final DiagnosisService service;
     private final ExampleService example;
-
-    // private final N100Composition patientComposition;
+    private final PatientPopulate  patientPopulate;
 
     @Autowired
-    public DiagnosisController(DiagnosisService service, ExampleService example) {
+    public DiagnosisController(DiagnosisService service, ExampleService example, PatientPopulate  patientPopulate) {
         this.service = service;
         this.example = example;
-        // this.patientComposition = patientComposition;
+        this.patientPopulate = patientPopulate;
     }
 
     @PostMapping(path = "/ehr")
@@ -64,19 +66,25 @@ public class DiagnosisController {
         return ResponseEntity.of(example.createExample());
     }
 
+    @GetMapping(path = "/example/patients")
+    public ResponseEntity<PatientDetailComposition> getPatient() {
+        return ResponseEntity.of(patientPopulate.createPatient());
+    }
+
     @PostMapping(path = "/{ehr_id}/patients")
-    public ResponseEntity<VersionUid> postPatients(@PathVariable(value = "ehr_id") UUID ehrId) {
-        N100Composition patient = new N100Composition();
-        patient.setPatientWeightUnits("patientWeightUnits");
-        patient.setPatientNameValue("patientNameValue");
+    public ResponseEntity<VersionUid> postPatients(@PathVariable(value = "ehr_id") UUID ehrId, @RequestBody PatientDetailComposition patient ) {
+        /*
+        PatientsComposition patient = new PatientsComposition();
+        patient.setHeightUnits("120cm");
+        */
         VersionUid versionUid = service.savePatients(ehrId, patient);
         return ResponseEntity.ok(versionUid);
     }
 
     @GetMapping(path = "/{ehr_id}/patients/{id}")
-    public ResponseEntity<N100Composition> getPatient(@PathVariable(value = "ehr_id") UUID ehrId,
+    public ResponseEntity<PatientDetailComposition> getPatient(@PathVariable(value = "ehr_id") UUID ehrId,
             @PathVariable(value = "id") VersionUid id) {
-        Optional<N100Composition> patient = service.getPatient(ehrId, id);
+        Optional<PatientDetailComposition> patient = service.getPatient(ehrId, id);
 
         return patient.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }

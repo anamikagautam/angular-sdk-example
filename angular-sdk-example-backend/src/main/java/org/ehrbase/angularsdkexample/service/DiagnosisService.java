@@ -3,7 +3,7 @@ package org.ehrbase.angularsdkexample.service;
 import org.ehrbase.client.openehrclient.VersionUid;
 import org.ehrbase.client.openehrclient.defaultrestclient.DefaultRestClient;
 import org.ehrbase.angularsdkexample.opt.diagnosecomposition.DiagnoseComposition;
-import org.ehrbase.angularsdkexample.opt.diagnosecomposition.N100Composition;
+import org.ehrbase.angularsdkexample.opt.diagnosecomposition.PatientDetailComposition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,12 +33,12 @@ public class DiagnosisService {
         return client.compositionEndpoint(ehrId).find(versionUid.getUuid(), DiagnoseComposition.class);
     }
 
-    public VersionUid savePatients(UUID ehrId, N100Composition patient) {
+    public VersionUid savePatients(UUID ehrId, PatientDetailComposition patient) {
         client.compositionEndpoint(ehrId).mergeCompositionEntity(patient);
         return patient.getVersionUid();
     }
 
-    public Optional<N100Composition> getPatient(UUID ehrId, VersionUid versionUid) {
-        return client.compositionEndpoint(ehrId).find(versionUid.getUuid(), N100Composition.class);
+    public Optional<PatientDetailComposition> getPatient(UUID ehrId, VersionUid versionUid) {
+        return client.compositionEndpoint(ehrId).find(versionUid.getUuid(), PatientDetailComposition.class);
     }
 }
