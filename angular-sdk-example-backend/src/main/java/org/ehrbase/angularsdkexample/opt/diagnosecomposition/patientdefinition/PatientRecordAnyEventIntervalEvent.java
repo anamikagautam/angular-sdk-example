@@ -1,6 +1,6 @@
 package org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientdefinition;
 
-import org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientshareddefinition.MathFunctionDefiningcode;
+import org.ehrbase.angularsdkexample.opt.patientshareddefinition.MathFunctionDefiningcode;
 import java.lang.Double;
 import java.lang.String;
 import java.time.temporal.TemporalAccessor;

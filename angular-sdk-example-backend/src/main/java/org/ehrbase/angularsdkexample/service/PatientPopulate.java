@@ -1,20 +1,14 @@
 package org.ehrbase.angularsdkexample.service;
 
-import com.nedap.archie.rm.generic.PartyIdentified;
-
 import org.ehrbase.angularsdkexample.opt.diagnosecomposition.PatientDetailComposition;
-import org.ehrbase.angularsdkexample.opt.diagnosecomposition.definition.FallidentifikationCluster;
-import org.ehrbase.angularsdkexample.opt.shareddefinition.CategoryDefiningcode;
-import org.ehrbase.angularsdkexample.opt.shareddefinition.Language;
-import org.ehrbase.angularsdkexample.opt.shareddefinition.SettingDefiningcode;
-import org.ehrbase.angularsdkexample.opt.shareddefinition.Territory;
+import org.ehrbase.angularsdkexample.opt.patientshareddefinition.CategoryDefiningcode;
+import org.ehrbase.angularsdkexample.opt.patientshareddefinition.Language;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -32,7 +26,7 @@ public class PatientPopulate {
         patient.setHealthCareFacility(null);
         patient.setParticipations(null);
         patient.setLocation("Gorakhpur");
-        patient.setLanguage(null);
+        patient.setLanguage(Language.EN);
         patient.setHealthcarefacility(null);
         patient.setTerritory(null);
         patient.setHeightMagnitude(22.0);
@@ -46,7 +40,9 @@ public class PatientPopulate {
         patient.setFeederAudit(null);
         patient.setParticipationsEventContext(null);
         patient.setLocationLocation(null);
-        patient.setCategoryDefiningcode(null);
+
+        CategoryDefiningcode categoryDefiningcode = new CategoryDefiningcode("value","description","terminologyId","code");
+        patient.setCategoryDefiningcode(categoryDefiningcode);
 
         return Optional.of(patient);
     }

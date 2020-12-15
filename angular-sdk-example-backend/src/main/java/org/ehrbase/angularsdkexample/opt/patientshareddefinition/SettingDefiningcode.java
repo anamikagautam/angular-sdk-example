@@ -1,4 +1,4 @@
-package org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientshareddefinition;
+package org.ehrbase.angularsdkexample.opt.patientshareddefinition;
 
 import java.lang.String;
 import org.ehrbase.client.classgenerator.EnumValueSet;

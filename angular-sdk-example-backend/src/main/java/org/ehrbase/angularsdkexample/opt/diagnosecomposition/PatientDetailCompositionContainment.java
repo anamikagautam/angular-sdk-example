@@ -1,10 +1,10 @@
 package org.ehrbase.angularsdkexample.opt.diagnosecomposition;
 
 import org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientdefinition.PatientRecordObservation;
-import org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientshareddefinition.CategoryDefiningcode;
-import org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientshareddefinition.Language;
-import org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientshareddefinition.SettingDefiningcode;
-import org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientshareddefinition.Territory;
+import org.ehrbase.angularsdkexample.opt.patientshareddefinition.CategoryDefiningcode;
+import org.ehrbase.angularsdkexample.opt.patientshareddefinition.Language;
+import org.ehrbase.angularsdkexample.opt.patientshareddefinition.SettingDefiningcode;
+import org.ehrbase.angularsdkexample.opt.patientshareddefinition.Territory;
 import com.nedap.archie.rm.archetyped.FeederAudit;
 import com.nedap.archie.rm.generic.Participation;
 import com.nedap.archie.rm.generic.PartyIdentified;

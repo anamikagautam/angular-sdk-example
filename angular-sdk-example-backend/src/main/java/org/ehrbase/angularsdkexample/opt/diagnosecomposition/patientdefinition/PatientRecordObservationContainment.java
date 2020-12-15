@@ -1,6 +1,6 @@
 package org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientdefinition;
 
-import org.ehrbase.angularsdkexample.opt.diagnosecomposition.patientshareddefinition.Language;
+import org.ehrbase.angularsdkexample.opt.patientshareddefinition.Language;
 import com.nedap.archie.rm.generic.PartyProxy;
 import java.time.temporal.TemporalAccessor;
 import org.ehrbase.client.aql.containment.Containment;
