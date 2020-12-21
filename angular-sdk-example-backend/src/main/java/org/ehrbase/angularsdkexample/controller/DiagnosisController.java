@@ -26,10 +26,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
@@ -125,12 +129,41 @@ public class DiagnosisController {
        // String command2 = "1d1d4428-c475-4158-a1df-a69781c81c0c";
        // String command3 = "/compositions?auditCommitter=Sumit%20House,%20MD.";
        // String command = command1+command2+command3;
-        String command = "curl -X POST --header \"Content-Type:application/json\" --header \"Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluQGNhYm9sYWJzLmNvbSIsImV4dHJhZGF0YSI6eyJvcmdfdWlkIjoiZTlkMTMyOTQtYmNlNy00NGU3LTk2MzUtOGU5MDZkYTBjOTE0In0sImlzc3VlZF9hdCI6IjIwMjAtMTItMjFUMTA6Mzg6MTYuNTc0WiIsImV4cGlyZXNfYXQiOiIyMDIwLTEyLTIyVDEwOjM4OjE2LjU3NVoifQ.01rMbHq1y998HEUK_oUr4XN6U9oomLFUdBkhn1oPXWM\" --data @OutputFile.json http://35.198.226.194:8090/rest/v1/ehrs/1d1d4428-c475-4158-a1df-a69781c81c0c/compositions?auditCommitter=Sumit%20House,%20MD.";
+       Path path = Paths.get("/workspace/angular-sdk-example/OutputFile.json");
+       String s = "#!/bin/sh \n";
+       String c1 = "curl -X POST --header 'Content-Type:application/json' ";
+       String url = " http://35.198.226.194:8090/rest/v1/ehrs/1d1d4428-c475-4158-a1df-a69781c81c0c/compositions?auditCommitter=Sumit%20House,%20MD.";
+       String c2 = "--header 'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluQGNhYm9sYWJzLmNvbSIsImV4dHJhZGF0YSI6eyJvcmdfdWlkIjoiZTlkMTMyOTQtYmNlNy00NGU3LTk2MzUtOGU5MDZkYTBjOTE0In0sImlzc3VlZF9hdCI6IjIwMjAtMTItMjFUMTA6Mzg6MTYuNTc0WiIsImV4cGlyZXNfYXQiOiIyMDIwLTEyLTIyVDEwOjM4OjE2LjU3NVoifQ.01rMbHq1y998HEUK_oUr4XN6U9oomLFUdBkhn1oPXWM' --data @"+path+url;
+        String command = s+c1+c2;
+        File tempFile1 = new File("/workspace/angular-sdk-example/file.sh");
+             try {
+            FileUtils.writeStringToFile(tempFile1, command);
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
         System.out.println(command);
-        try {
-            Process process = Runtime.getRuntime().exec(command);
-            System.out.println(process);
-        } catch (IOException e) {
+      //  ProcessBuilder process = new ProcessBuilder(command);
+       try
+        {
+            Process p2 = Runtime.getRuntime().exec("chmod 777 /workspace/angular-sdk-example/file.sh");
+           Process p = Runtime.getRuntime().exec("/workspace/angular-sdk-example/file.sh");
+           p.getInputStream();
+           System.out.print(p.exitValue());
+           System.out.print("hello");
+            /* BufferedReader reader =  new BufferedReader(new InputStreamReader(p.getInputStream()));
+                StringBuilder builder = new StringBuilder();
+                String line = null;
+                while ( (line = reader.readLine()) != null) {
+                        builder.append(line);
+                        builder.append(System.getProperty("line.separator"));
+                }
+                String result = builder.toString();
+                System.out.print(result);
+*/
+        }
+        catch (IOException e)
+        {   System.out.print("error");
             e.printStackTrace();
         }
         return ResponseEntity.ok("Success");
